@@ -35,3 +35,21 @@ textarea {
         display: none;
     }
 }
+
+/*Custom is comming*/
+
+.left.carousel-control,
+.right.carousel-control {
+    background-image: none;
+}
+
+.navbar-brand{
+    background: url('../images/produtos/logo.png');
+    width: 215px;
+    height: 55px;
+}
+
+.navbar-inverse {
+    background-color: #F8965D;
+    border-color: white;
+}
