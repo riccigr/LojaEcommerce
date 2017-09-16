@@ -1,1 +1,41 @@
-﻿<h1>Esta é a View do Resumo.</h1>
+﻿@{
+    ViewData["Title"] = "Resumo";
+}
+
+<h3>Resumo do pedido</h3>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Número do pedido:    123456789</h3>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Seus dados</h3>
+                <div>Joao da Silva</div>
+                <div>(11) 1234-4567</div>
+            </div>
+            <div class="col-md-3">
+                <div>joao@alura.com.br</div>
+            </div>
+            <div class="col-md-6">
+                <h3>Endereco de entrga</h3>
+                <div>Rua Vergueiro</div>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-md-10">
+                <h3>Item</h3>
+                <div>REST</div>
+            </div>
+            <div class="col-md-2">
+                <h3>Quantidade</h3>
+                <div class="pull-right">3</div>
+            </div>
+        </div>
+    </div>
+</div>
