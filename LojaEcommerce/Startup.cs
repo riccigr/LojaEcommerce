@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaEcommerce
 {
@@ -29,10 +30,14 @@ namespace LojaEcommerce
         {
             // Add framework services.
             services.AddMvc();
+            //string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            string connectionString = Configuration.GetSection("ConnectionString").GetValue<string>("Default");
+            services.AddDbContext<Contexto>(options => options.UseMySql(connectionString));
+            services.AddTransient<IDataService, DataService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -55,6 +60,9 @@ namespace LojaEcommerce
                     name: "default",
                     template: "{controller=Pedido}/{action=Carrossel}/{id?}");
             });
+
+            IDataService dataService = serviceProvider.GetService<IDataService>();
+            dataService.InicializaDB();
         }
     }
 }
