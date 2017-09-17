@@ -1,4 +1,5 @@
 ﻿using LojaEcommerce.Models;
+using LojaEcommerce.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,9 @@ namespace LojaEcommerce.Controllers
                 new ItemPedido(3, produtos[2], 3)
             };
 
-            return View(itensCarrinho);
+            CarrinhoViewModel viewModel = new CarrinhoViewModel(itensCarrinho);
+
+            return View(viewModel);
         }
 
         public IActionResult Resumo()
