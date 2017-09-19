@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace LojaEcommerce.Models
     {
         public int Id { get; private set; }
         public string Nome { get; private set; }
+        [Column(TypeName = "decima(18,2)")]
         public decimal Preco { get; private set; }
 
         public Produto() {}

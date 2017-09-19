@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace LojaEcommerce.Models
         public int Id { get; private set; }
         public Produto Produto { get; private set; }
         public int Quantidade { get; private set; }
+        [Column(TypeName = "decima(18,2)")]
         public decimal PrecoUnitario { get; private set; }
         public decimal Subtotal {
             get
