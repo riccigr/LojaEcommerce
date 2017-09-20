@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace LojaEcommerce.Models
 {
-    public class ItemPedido
+    public class ItemPedido : BaseModel
     {
-
-        public int Id { get; private set; }
+        [DataMember]
         public Produto Produto { get; private set; }
+        [DataMember]
         public int Quantidade { get; private set; }
         [Column(TypeName = "decima(18,2)")]
+        [DataMember]
         public decimal PrecoUnitario { get; private set; }
+        [DataMember]
         public decimal Subtotal {
             get
             {
@@ -32,6 +35,11 @@ namespace LojaEcommerce.Models
             this.Produto = produto;
             this.Quantidade = quantidade;
             this.PrecoUnitario = produto.Preco;
+        }
+
+        public void AtualizaQuantidade(int quantidade)
+        {
+            this.Quantidade = quantidade;
         }
 
     }

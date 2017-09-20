@@ -44,5 +44,11 @@ namespace LojaEcommerce.Controllers
             return viewModel;
         }
 
+        [HttpPost]
+        public void PostQuantidade([FromBody]ItemPedido input)
+        {
+            _dataService.UpdateQuantidade(input);
+        }
+
     }
 }

@@ -51,5 +51,16 @@ namespace LojaEcommerce
         {
             return _contexto.ItensPedido.ToList();
         }
+
+        public void UpdateQuantidade(ItemPedido item)
+        {
+            var itemSelecionado = _contexto.ItensPedido.Where(i => i.Id == item.Id).SingleOrDefault();
+
+            if(itemSelecionado != null)
+            {
+                itemSelecionado.AtualizaQuantidade(item.Quantidade);
+                _contexto.SaveChanges();
+            }
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace LojaEcommerce
         void InicializaDB();
         List<Produto> GetProdutos();
         List<ItemPedido> GetItensPedido();
+        void UpdateQuantidade(ItemPedido item);
     }
 }

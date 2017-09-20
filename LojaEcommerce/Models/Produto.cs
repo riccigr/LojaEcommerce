@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 
 namespace LojaEcommerce.Models
 {
-    public class Produto
+    public class Produto : BaseModel
     {
-        public int Id { get; private set; }
+        [DataMember]
         public string Nome { get; private set; }
         [Column(TypeName = "decima(18,2)")]
+        [DataMember]
         public decimal Preco { get; private set; }
 
         public Produto() {}
