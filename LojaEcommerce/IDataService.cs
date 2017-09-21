@@ -1,4 +1,5 @@
 ﻿using LojaEcommerce.Models;
+using LojaEcommerce.Response;
 using System.Collections.Generic;
 
 namespace LojaEcommerce
@@ -8,6 +9,6 @@ namespace LojaEcommerce
         void InicializaDB();
         List<Produto> GetProdutos();
         List<ItemPedido> GetItensPedido();
-        void UpdateQuantidade(ItemPedido item);
+        UpdateItemPedidoResponse UpdateQuantidade(ItemPedido item);
     }
 }

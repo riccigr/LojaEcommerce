@@ -1,4 +1,6 @@
 ﻿using LojaEcommerce.Models;
+using LojaEcommerce.Models.ViewModels;
+using LojaEcommerce.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,15 +54,24 @@ namespace LojaEcommerce
             return _contexto.ItensPedido.ToList();
         }
 
-        public void UpdateQuantidade(ItemPedido item)
+        public UpdateItemPedidoResponse UpdateQuantidade(ItemPedido item)
         {
             var itemSelecionado = _contexto.ItensPedido.Where(i => i.Id == item.Id).SingleOrDefault();
 
             if(itemSelecionado != null)
             {
                 itemSelecionado.AtualizaQuantidade(item.Quantidade);
+                if(itemSelecionado.Quantidade == 0)
+                {
+                    _contexto.ItensPedido.Remove(itemSelecionado);
+                }
+
                 _contexto.SaveChanges();
             }
+
+            var carrinhoViewModel = new CarrinhoViewModel(_contexto.ItensPedido.ToList());
+            
+            return new UpdateItemPedidoResponse(itemSelecionado, carrinhoViewModel);
         }
     }
 }

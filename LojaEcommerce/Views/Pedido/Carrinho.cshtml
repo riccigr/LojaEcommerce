@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <span class="pull-right">@(item.Subtotal)</span>
+                    R$ <span class="pull-right" subtotal>@(item.Subtotal)</span>
                 </div>
             </div>
         }
@@ -49,13 +49,13 @@
     <div class="panel-footer">
         <div class="row">
             <div class="col-md-10">
-                <span> 
-                    Total: @Model.Itens.Count() @(Model.Itens.Count() < 2 ? "item" : "itens")
+                Total: <span numero-itens> 
+                    @Model.Itens.Count() @(Model.Itens.Count() < 2 ? "item" : "itens")
                 </span>
             </div>
             <div class="col-md-2">
-                <span class="pull-right">
-                   Total R$ @Model.Total
+                Total R$ <span class="pull-right" total>
+                    @Model.Total
                 </span>
             </div>
         </div>

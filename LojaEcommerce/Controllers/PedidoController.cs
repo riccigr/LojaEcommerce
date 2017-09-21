@@ -1,5 +1,6 @@
 ﻿using LojaEcommerce.Models;
 using LojaEcommerce.Models.ViewModels;
+using LojaEcommerce.Response;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -45,9 +46,9 @@ namespace LojaEcommerce.Controllers
         }
 
         [HttpPost]
-        public void PostQuantidade([FromBody]ItemPedido input)
+        public UpdateItemPedidoResponse PostQuantidade([FromBody]ItemPedido input)
         {
-            _dataService.UpdateQuantidade(input);
+            return _dataService.UpdateQuantidade(input);
         }
 
     }
