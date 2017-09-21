@@ -42,5 +42,10 @@ namespace LojaEcommerce.Models
             this.Quantidade = quantidade;
         }
 
+        public void AtualizaQuantidade()
+        {
+            this.Quantidade++;
+        }
+
     }
 }

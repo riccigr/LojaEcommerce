@@ -44,6 +44,26 @@ namespace LojaEcommerce
             }
         }
 
+        public void AddItemPedido(int produtoId)
+        {
+            var produtoSelecionado = _contexto.Produto.Where(p => p.Id == produtoId).SingleOrDefault();
+
+            if(produtoSelecionado != null)
+            {
+                if (_contexto.ItensPedido.Where(i => i.Produto.Id == produtoSelecionado.Id).Any())
+                {
+                    var itemPedidoAtual = _contexto.ItensPedido.Where(i => i.Produto.Id == produtoSelecionado.Id).SingleOrDefault();
+                    itemPedidoAtual.AtualizaQuantidade();
+                }
+                else
+                {
+                    _contexto.ItensPedido.Add(new ItemPedido(produtoSelecionado, 1));
+                }
+
+                _contexto.SaveChanges();
+            }
+        }
+
         public List<Produto> GetProdutos()
         {
             return _contexto.Produto.ToList();
