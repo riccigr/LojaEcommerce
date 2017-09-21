@@ -57,7 +57,7 @@
     }
 
     setNumeroItens(carrinhoViewModel) {
-        var txtTotal = 'Total ' + carrinhoViewModel.itens.length + ' ' + (carrinhoViewModel.itens.length == 1 ? 'item' : 'itens')
+        var txtTotal = carrinhoViewModel.itens.length + ' ' + (carrinhoViewModel.itens.length == 1 ? 'item' : 'itens')
         $('[numero-itens]').html(txtTotal);
     }
 
