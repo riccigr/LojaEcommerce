@@ -9,7 +9,8 @@ namespace LojaEcommerce
 {
     public class Contexto : DbContext
     {
-        public DbSet<Produto> Produto { get; private set; }
+        public DbSet<Produto> Produtos { get; private set; }
+        public DbSet<Pedido> Pedidos { get; private set; }
         public DbSet<ItemPedido> ItensPedido { get; private set; }
 
         public Contexto(DbContextOptions<Contexto> options) : base(options)

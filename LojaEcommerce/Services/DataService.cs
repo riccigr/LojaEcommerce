@@ -5,22 +5,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace LojaEcommerce
 {
     public class DataService : IDataService
     {
         private readonly Contexto _contexto;
+        private readonly IHttpContextAccessor _contextAcessor;
 
-        public DataService(Contexto contexto)
+        public DataService(Contexto contexto, IHttpContextAccessor contextAcessor)
         {
             this._contexto = contexto;
+            this._contextAcessor = contextAcessor;
         }
 
         public void InicializaDB()
         {
             this._contexto.Database.EnsureCreated();
-            if(this._contexto.Produto.Count() == 0)
+            if(this._contexto.Produtos.Count() == 0)
             {
                 List<Produto> produtos = new List<Produto>
                 {
@@ -36,8 +39,7 @@ namespace LojaEcommerce
                 };
                 foreach (var produto in produtos)
                 {
-                    this._contexto.Produto.Add(produto);
-                    this._contexto.ItensPedido.Add(new ItemPedido(produto, 1));
+                    this._contexto.Produtos.Add(produto);
 
                     this._contexto.SaveChanges();
                 }
@@ -46,32 +48,46 @@ namespace LojaEcommerce
 
         public void AddItemPedido(int produtoId)
         {
-            var produtoSelecionado = _contexto.Produto.Where(p => p.Id == produtoId).SingleOrDefault();
+            var produtoSelecionado = _contexto.Produtos.Where(p => p.Id == produtoId).SingleOrDefault();
 
             if(produtoSelecionado != null)
             {
-                if (_contexto.ItensPedido.Where(i => i.Produto.Id == produtoSelecionado.Id).Any())
+                Pedido pedido = null;
+
+                int? pedidoId = GetSessionPedidoId();
+                if (pedidoId.HasValue)
                 {
-                    var itemPedidoAtual = _contexto.ItensPedido.Where(i => i.Produto.Id == produtoSelecionado.Id).SingleOrDefault();
-                    itemPedidoAtual.AtualizaQuantidade();
-                }
-                else
-                {
-                    _contexto.ItensPedido.Add(new ItemPedido(produtoSelecionado, 1));
+                    pedido = _contexto.Pedidos.Where(p => p.Id == pedidoId.Value).SingleOrDefault();
                 }
 
-                _contexto.SaveChanges();
+                if (pedido == null)
+                {
+                    pedido = new Pedido();
+                }
+
+                if (!_contexto.ItensPedido.Where(i => i.Produto.Id == produtoSelecionado.Id && i.Pedido.Id == pedido.Id).Any())
+                {
+                    _contexto.ItensPedido.Add(new ItemPedido(pedido, produtoSelecionado, 1));
+                    _contexto.SaveChanges();
+                    SetSessionPedidoId(pedido);
+                }
+
+
             }
         }
 
+
         public List<Produto> GetProdutos()
         {
-            return _contexto.Produto.ToList();
+            return _contexto.Produtos.ToList();
         }
 
         public List<ItemPedido> GetItensPedido()
         {
-            return _contexto.ItensPedido.ToList();
+            int? pedidoId = GetSessionPedidoId();
+            Pedido pedido = _contexto.Pedidos.Where(p => p.Id == pedidoId).Single();
+
+            return _contexto.ItensPedido.Where(i => i.Pedido.Id == pedido.Id).ToList();
         }
 
         public UpdateItemPedidoResponse UpdateQuantidade(ItemPedido item)
@@ -92,6 +108,15 @@ namespace LojaEcommerce
             var carrinhoViewModel = new CarrinhoViewModel(_contexto.ItensPedido.ToList());
             
             return new UpdateItemPedidoResponse(itemSelecionado, carrinhoViewModel);
+        }
+        private void SetSessionPedidoId(Pedido pedido)
+        {
+            _contextAcessor.HttpContext.Session.SetInt32("pedidoId", pedido.Id);
+        }
+
+        private int? GetSessionPedidoId()
+        {
+            return _contextAcessor.HttpContext.Session.GetInt32("pedidoId");
         }
     }
 }

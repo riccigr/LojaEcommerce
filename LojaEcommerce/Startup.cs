@@ -30,9 +30,12 @@ namespace LojaEcommerce
         {
             // Add framework services.
             services.AddMvc();
-            //string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            string connectionString = Configuration.GetSection("ConnectionString").GetValue<string>("Default");
-            services.AddDbContext<Contexto>(options => options.UseMySql(connectionString));
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+
+            string connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            //string connectionString = Configuration.GetSection("ConnectionString").GetValue<string>("Default");
+            services.AddDbContext<Contexto>(options => options.UseSqlServer(connectionString));
             services.AddTransient<IDataService, DataService>();
         }
 
@@ -54,6 +57,7 @@ namespace LojaEcommerce
 
             app.UseStaticFiles();
 
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

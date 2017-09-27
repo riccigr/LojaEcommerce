@@ -11,7 +11,7 @@ namespace LojaEcommerce.Models
     {
         [DataMember]
         public string Nome { get; private set; }
-        [Column(TypeName = "decima(18,2)")]
+        [Column(TypeName = "decimal(18,2)")]
         [DataMember]
         public decimal Preco { get; private set; }
 
