@@ -17,6 +17,7 @@ namespace LojaEcommerce.Controllers
         {
             this._dataService = dataService;
         }
+
         public IActionResult Carrossel()
         {
             List<Produto> produtos = _dataService.GetProdutos();
@@ -50,9 +51,14 @@ namespace LojaEcommerce.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Resumo(Pedido cadastro)
         {
-            Pedido viewModel = _dataService.GetPedido();
+            if (ModelState.IsValid)
+            {
+                Pedido viewModel = _dataService.UpdateCadastro(cadastro);
 
-            return View(viewModel);
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Cadastro");
         }
 
         private CarrinhoViewModel GetCarrinhoViewModel()

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace LojaEcommerce
 {
@@ -76,7 +77,6 @@ namespace LojaEcommerce
             }
         }
 
-
         public List<Produto> GetProdutos()
         {
             return _contexto.Produtos.ToList();
@@ -88,6 +88,16 @@ namespace LojaEcommerce
             Pedido pedido = _contexto.Pedidos.Where(p => p.Id == pedidoId).Single();
 
             return _contexto.ItensPedido.Where(i => i.Pedido.Id == pedido.Id).ToList();
+        }
+
+        public Pedido GetPedido()
+        {
+            int? pedidoId = GetSessionPedidoId();
+            return _contexto.Pedidos
+                .Include(p => p.Itens)
+                    .ThenInclude(p => p.Produto)
+                .Where(p => p.Id == pedidoId)
+                .SingleOrDefault();
         }
 
         public UpdateItemPedidoResponse UpdateQuantidade(ItemPedido item)
@@ -110,12 +120,6 @@ namespace LojaEcommerce
             return new UpdateItemPedidoResponse(itemSelecionado, carrinhoViewModel);
         }
 
-        public Pedido GetPedido()
-        {
-            int? pedidoId = GetSessionPedidoId();
-            return _contexto.Pedidos.Where(p => p.Id == pedidoId).SingleOrDefault();
-        }
-
         private void SetSessionPedidoId(Pedido pedido)
         {
             _contextAcessor.HttpContext.Session.SetInt32("pedidoId", pedido.Id);
@@ -126,5 +130,14 @@ namespace LojaEcommerce
             return _contextAcessor.HttpContext.Session.GetInt32("pedidoId");
         }
 
+        public Pedido UpdateCadastro(Pedido cadastro)
+        {
+            Pedido pedido = GetPedido();
+
+            pedido.UpdateCadastro(cadastro);
+            _contexto.SaveChanges();
+
+            return pedido;
+        }
     }
 }
