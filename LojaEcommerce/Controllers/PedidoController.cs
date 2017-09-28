@@ -33,9 +33,24 @@ namespace LojaEcommerce.Controllers
 
             return View(viewModel);
         }
-        public IActionResult Resumo()
+
+        public IActionResult Cadastro()
         {
-            CarrinhoViewModel viewModel = GetCarrinhoViewModel();
+            Pedido viewModel = _dataService.GetPedido();
+
+            if(ViewData == null)
+            {
+                return RedirectToAction("Carrossel");
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Resumo(Pedido cadastro)
+        {
+            Pedido viewModel = _dataService.GetPedido();
 
             return View(viewModel);
         }
@@ -50,10 +65,12 @@ namespace LojaEcommerce.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public UpdateItemPedidoResponse PostQuantidade([FromBody]ItemPedido input)
         {
             return _dataService.UpdateQuantidade(input);
         }
+
 
     }
 }

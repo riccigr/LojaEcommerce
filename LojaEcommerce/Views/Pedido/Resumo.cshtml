@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Resumo";
 }
-@model LojaEcommerce.Models.ViewModels.CarrinhoViewModel
+@model Pedido
 
 <h3>Resumo do pedido</h3>
 
@@ -9,22 +9,22 @@
     <div class="panel-body">
         <div class="row">
             <div class="col-md-12">
-                <h3>Número do pedido:    123456789</h3>
+                <h3>Número do pedido:    @Model.Id</h3>
             </div>
         </div>
         <hr />
         <div class="row">
             <div class="col-md-3">
                 <h3>Seus dados</h3>
-                <div>Joao da Silva</div>
-                <div>(11) 1234-4567</div>
+                <div>@Model.Nome</div>
+                <div>@Model.Telefone</div>
             </div>
             <div class="col-md-3">
-                <div>joao@alura.com.br</div>
+                <div>@Model.Email</div>
             </div>
             <div class="col-md-6">
-                <h3>Endereco de entrga</h3>
-                <div>Rua Vergueiro</div>
+                <h3>Endereço de entrega</h3>
+                <div>@Model.Endereco @Model.Complemento @Model.CEP @Model.Bairro @Model.Cidade @Model.UF</div>
             </div>
         </div>
         <hr />

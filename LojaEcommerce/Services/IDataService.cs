@@ -11,5 +11,6 @@ namespace LojaEcommerce
         List<ItemPedido> GetItensPedido();
         UpdateItemPedidoResponse UpdateQuantidade(ItemPedido item);
         void AddItemPedido(int produtoId);
+        Pedido GetPedido();
     }
 }

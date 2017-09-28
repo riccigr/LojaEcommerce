@@ -109,6 +109,13 @@ namespace LojaEcommerce
             
             return new UpdateItemPedidoResponse(itemSelecionado, carrinhoViewModel);
         }
+
+        public Pedido GetPedido()
+        {
+            int? pedidoId = GetSessionPedidoId();
+            return _contexto.Pedidos.Where(p => p.Id == pedidoId).SingleOrDefault();
+        }
+
         private void SetSessionPedidoId(Pedido pedido)
         {
             _contextAcessor.HttpContext.Session.SetInt32("pedidoId", pedido.Id);
@@ -118,5 +125,6 @@ namespace LojaEcommerce
         {
             return _contextAcessor.HttpContext.Session.GetInt32("pedidoId");
         }
+
     }
 }

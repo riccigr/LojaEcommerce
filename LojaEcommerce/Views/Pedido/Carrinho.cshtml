@@ -5,6 +5,10 @@
 
 <h3>Meu Carrinho</h3>
 
+<form method="post">
+    @Html.AntiForgeryToken();
+</form>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
@@ -64,7 +68,10 @@
 </div>
 <div class="row">
     <div class="col-md-12">
-        <a asp-action="resumo" class="btn btn-success pull-right">Finalizar Pedido</a>
+        <div class="pull-right">
+            <a asp-action="carrossel" class="btn btn-warning">Continuar Comprando</a>
+            <a asp-action="cadastro" class="btn btn-success ">Preencher Cadastro</a>
+        </div>
     </div>
 </div>
 

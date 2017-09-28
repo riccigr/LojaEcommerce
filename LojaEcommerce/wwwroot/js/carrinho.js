@@ -28,11 +28,16 @@
     }
 
     postQuantidade(data) {
+
+        var header = {};
+        header['RequestVerificationToken'] = $('input[name=__RequestVerificationToken]').val();
+
         $.ajax({
             url: '/pedido/PostQuantidade',
             type: 'POST',
             contentType: 'application/json',
-            data: JSON.stringify(data)
+            data: JSON.stringify(data),
+            headers: header
         }).done(function (response) {
             this.setQuantidade(response.itemPedido);
             this.setSubtotal(response.itemPedido);

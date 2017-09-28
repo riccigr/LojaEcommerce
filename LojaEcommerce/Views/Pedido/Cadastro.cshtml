@@ -1,0 +1,68 @@
+﻿@{
+    ViewData["Title"] = "Cadastro";
+}
+@model Pedido
+
+<h3>Cadastro</h3>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <form role="form" method="post" asp-action="resumo">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="nomeCliente">Nome do Cliente</label>
+                    <input type="text" class="form-control" id="nomeCliente" placeholder="Nome do Cliente" 
+                           asp-for="Nome">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" placeholder="E-mail" 
+                           asp-for="Email">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="telefone">Telefone</label>
+                    <input type="text" class="form-control" id="telefone" placeholder="Telefone" 
+                           asp-for="Telefone">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="endereco">Endereço</label>
+                    <input type="text" class="form-control" id="endereco" placeholder="Endereço" 
+                           asp-for="Endereco">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="complemento">Complemento</label>
+                    <input type="text" class="form-control" id="complemento" placeholder="Complemento" 
+                           asp-for="Complemento">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="bairro">Bairro</label>
+                    <input type="text" class="form-control" id="bairro" placeholder="Bairro" 
+                           asp-for="Bairro">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="control-label" for="cidade">Cidade</label>
+                    <input type="text" class="form-control" id="cidade" placeholder="Cidade" 
+                           asp-for="Cidade">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="uf">UF</label>
+                    <input type="text" class="form-control" id="uf" placeholder="UF" 
+                           asp-for="UF">
+                </div>
+                <div class="form-group">
+                    <label class="control-label" for="CEP">CEP</label>
+                    <input type="text" class="form-control" id="CEP" placeholder="CEP" 
+                           asp-for="CEP">
+                </div>
+                <div class="form-group">
+                    <a asp-action="carrinho" class="btn btn-warning">Continuar Comprando</a>
+                    <button type="submit" class="btn btn-success">Finalizar Pedido</button>
+                </div>
+            </div>
+        </form> 
+    </div>
+</div>
